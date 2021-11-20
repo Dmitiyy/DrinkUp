@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import Logo from '../assets/images/logo.png';
 import Search from '../assets/images/search.svg';
 import Heart from '../assets/images/heart.svg';
@@ -14,7 +15,9 @@ export const Nav = () => {
         </div>
         <ul>
           <li>Personal Cocktails</li>
-          <li>Community</li>
+          <Link to='/community'>
+            <li>Community</li>
+          </Link>
         </ul>
         <div className='home__nav-icons'>
           <img src={Heart} alt='heart' />

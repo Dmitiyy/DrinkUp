@@ -3,12 +3,12 @@ import {ReactComponent as Old} from '../assets/images/old.svg';
 import {ReactComponent as Margarita} from '../assets/images/margarita.svg';
 import {ReactComponent as Collins} from '../assets/images/tom_collins.svg';
 
-export const Cocktails = () => {
+export const Cocktails = ({name}: {name: string}) => {
   return (
     <>
       <div className='home__cocktails'>
         <div className='home__cocktails-container'>
-          <h2>Cocktails</h2>
+          <h2>{name}</h2>
           <div className="home__cocktails-wrap">
             <div className='home__cocktails-filter'>
               <h3>Filters</h3>
