@@ -23,7 +23,9 @@ export const Nav = () => {
         </ul>
         <div className='home__nav-icons'>
           <img src={Heart} alt='heart' />
-          <img src={User} alt='user' />
+          <Link to='/user'>
+            <img src={User} alt='user' />
+          </Link>
         </div>
       </div>
     </div>
