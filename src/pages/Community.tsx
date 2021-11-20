@@ -14,7 +14,7 @@ export const Community = () => {
       <div className='community'>
         <Nav />
         <BreadCrumbs data={crumbs} active={2} />
-        <Cocktails name='Community' />
+        <Cocktails name='Community' link='community' />
         <Footer />
       </div>
     </>

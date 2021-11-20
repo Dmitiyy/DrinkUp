@@ -1,9 +1,10 @@
+import {Link} from 'react-router-dom';
 import {ReactComponent as CocktailIcon} from '../assets/images/cocktail_icon.svg';
 import {ReactComponent as Old} from '../assets/images/old.svg';
 import {ReactComponent as Margarita} from '../assets/images/margarita.svg';
 import {ReactComponent as Collins} from '../assets/images/tom_collins.svg';
 
-export const Cocktails = ({name}: {name: string}) => {
+export const Cocktails = ({name, link}: {name: string, link: string}) => {
   return (
     <>
       <div className='home__cocktails'>
@@ -48,9 +49,11 @@ export const Cocktails = ({name}: {name: string}) => {
                 [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].map(item => {
                   return (
                     <div className="home__cocktails-listItem" key={item}>
-                      <div className='home__cocktails-itemBg'>
-                        <h3>White Lady</h3>
-                      </div>
+                      <Link to={`/${link}/search`}>
+                        <div className='home__cocktails-itemBg'>
+                          <h3>White Lady</h3>
+                        </div>
+                      </Link>
                     </div>
                   )
                 })

@@ -14,7 +14,9 @@ export const Nav = () => {
           <div><img src={Search} alt='search' /></div>
         </div>
         <ul>
-          <li>Personal Cocktails</li>
+          <Link to='/'>
+            <li>Personal Cocktails</li>
+          </Link>
           <Link to='/community'>
             <li>Community</li>
           </Link>
