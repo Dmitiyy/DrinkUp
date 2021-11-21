@@ -14,7 +14,7 @@ export const Nav = () => {
           <div><img src={Search} alt='search' /></div>
         </div>
         <ul>
-          <Link to='/'>
+          <Link to='/user/personal'>
             <li>Personal Cocktails</li>
           </Link>
           <Link to='/community'>
@@ -22,7 +22,9 @@ export const Nav = () => {
           </Link>
         </ul>
         <div className='home__nav-icons'>
-          <img src={Heart} alt='heart' />
+          <Link to='/user/liked'>
+            <img src={Heart} alt='heart' />
+          </Link>
           <Link to='/user'>
             <img src={User} alt='user' />
           </Link>
