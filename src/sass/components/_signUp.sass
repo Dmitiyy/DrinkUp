@@ -1,0 +1,91 @@
+.signUp
+  display: flex
+  flex-direction: column
+  align-items: center
+  label
+    display: block
+    width: 100%
+    margin-top: 20px
+    color: #0C2D68
+    font-size: 16px
+    font-weight: 700
+    text-transform: uppercase
+    margin-bottom: 12px
+  input
+    width: 400px
+    height: 50px
+    font-weight: 400
+    font-size: 18px
+    padding: 18px
+    background: #FFFFFF
+    border: 1px solid #A2A6B0
+    border-radius: 4px
+    outline: none
+  div
+    display: flex
+    align-items: center
+    div
+      height: 50px
+      border: 1px solid #A2A6B0
+      border-radius: 4px
+      border-left: none
+      border-radius: 0px 4px 4px 0
+      padding-right: 18px
+    input
+      width: calc(400px - 25px - 14px)
+      height: 50px
+      font-weight: 400
+      font-size: 18px
+      padding: 18px
+      background: #FFFFFF
+      border: 1px solid #A2A6B0
+      border-radius: 4px 0 0 4px
+      outline: none
+      border-right: none
+  button
+    width: 100%
+    height: 50px
+    background: #0C2D68
+    border-radius: 4px
+    font-weight: 700
+    font-size: 18px
+    text-transform: uppercase
+    margin-top: 20px
+    border: none
+    cursor: pointer
+    outline: none
+    color: #fff
+  &__text
+    display: flex
+    color: #0C2D68
+    font-weight: 400 !important
+    margin-top: 20px
+    p
+      font-size: 18px
+      &:nth-child(2)
+        border-bottom: 2px solid #0C2D68
+        cursor: pointer
+        margin-left: 15px
+  &__policy
+    margin-top: 20px
+    justify-content: space-between
+    width: 100%
+    .checkbox
+      user-select: none
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 30px
+      height: 30px
+      border-radius: 4px
+      border: 1px solid #A2A6B0
+      cursor: pointer
+      p
+        margin-left: 17px
+        font-size: 17px
+        font-weight: 700
+    p
+      font-size: 16.5px !important
+      span
+        color: #AFAFAF
+        font-weight: 700

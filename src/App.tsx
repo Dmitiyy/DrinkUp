@@ -13,6 +13,7 @@ function App() {
       <Route path='/cocktails' element={<HomePage />} />
       <Route path='/cocktails/search' element={<CocktailElement community={false} />} />
       <Route path='/community/search' element={<CocktailElement community={true} />} />
+      <Route path='/community/cocktail' element={<CocktailElement community={true} />} />
       <Route path='/user' element={<Profile />} />
     </Routes>
   );

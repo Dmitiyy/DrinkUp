@@ -5,6 +5,8 @@ import { ReactComponent as Edit } from "../assets/images/edit.svg";
 import { ReactComponent as Password } from "../assets/images/password.svg";
 import { ReactComponent as Logout } from "../assets/images/logout.svg";
 import { Footer } from "../components/Footer";
+import { SignUp } from "../components/SignUp";
+import { SignIn } from "../components/SignIn";
 
 const crumbs = [
   {title: 'Home', link: '/', id: 1},
@@ -37,7 +39,7 @@ export const Profile = () => {
               <p>{bioLength}/250</p>
             </div>
             <label htmlFor="email">Your email</label>
-            <input type="text" id='email' />
+            <input type="email" id='email' />
             <label htmlFor="password">Password</label>
             <div>
               <input type="text" id='password' />
@@ -45,6 +47,14 @@ export const Profile = () => {
                 <Password />
               </div>
             </div>
+            <label htmlFor="passwordC">Confirm Password</label>
+            <div>
+              <input type="text" id='passwordC' />
+              <div>
+                <Password />
+              </div>
+            </div>
+            <button className='profile-save'>Save changes</button>
           </form>
           <div className='profile-logoutWrap'>
             <div className='profile-logout'>
@@ -52,6 +62,8 @@ export const Profile = () => {
               <h3>Log out</h3>
             </div>
           </div>
+          <SignUp />
+          <SignIn />
         </div>
       </div>
       <Footer />

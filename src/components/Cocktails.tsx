@@ -49,7 +49,7 @@ export const Cocktails = ({name, link}: {name: string, link: string}) => {
                 [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].map(item => {
                   return (
                     <div className="home__cocktails-listItem" key={item}>
-                      <Link to={`/${link}/search`}>
+                      <Link to={`/${link}/${link === 'community' ? 'cocktail' : 'search'}`}>
                         <div className='home__cocktails-itemBg'>
                           <h3>White Lady</h3>
                         </div>
