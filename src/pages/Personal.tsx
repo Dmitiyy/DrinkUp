@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BreadCrumbs, TCrumbs } from "../components/BreadCrumbs";
 import { Nav } from "../components/Nav"
 import { ReactComponent as Bin } from "../assets/images/bin.svg";
@@ -33,10 +34,12 @@ export const Personal = () => {
                 )
               })
             }
-            <div className='personal__item-new'>
-              <Plus />
-              <p>Add Cocktail</p>
-            </div>
+            <Link to='/user/personal/new'>
+              <div className='personal__item-new'>
+                <Plus />
+                <p>Add Cocktail</p>
+              </div>
+            </Link>
           </div>
         </div>
         <Footer />

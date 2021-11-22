@@ -3,6 +3,7 @@ import { CocktailElement } from './pages/CocktailElement';
 import { Community } from './pages/Community';
 import { HomePage } from './pages/Home';
 import { Liked } from './pages/Liked';
+import { NewCocktail } from './pages/NewCocktail';
 import { Personal } from './pages/Personal';
 import { Profile } from './pages/Profile';
 import './sass/main.sass';
@@ -19,6 +20,7 @@ function App() {
       <Route path='/user' element={<Profile />} />
       <Route path='/user/liked' element={<Liked />} />
       <Route path='/user/personal' element={<Personal />} />
+      <Route path='/user/personal/new' element={<NewCocktail />} />
     </Routes>
   );
 }

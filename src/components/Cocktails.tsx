@@ -3,8 +3,21 @@ import {ReactComponent as CocktailIcon} from '../assets/images/cocktail_icon.svg
 import {ReactComponent as Old} from '../assets/images/old.svg';
 import {ReactComponent as Margarita} from '../assets/images/margarita.svg';
 import {ReactComponent as Collins} from '../assets/images/tom_collins.svg';
+// import { useHttp } from '../hooks/useHttp';
+// import { useEffect } from 'react';
 
 export const Cocktails = ({name, link}: {name: string, link: string}) => {
+  // const [response, loading, error, getResults] = useHttp({
+  //   url: 'cocktails',
+  //   data: null,
+  //   type: 'GET'
+  // });
+
+  // useEffect(() => {getResults()}, []);
+  // useEffect(() => {console.log(response)}, [response]);
+  // useEffect(() => {console.log(loading)}, [loading]);
+  // useEffect(() => {console.log(error)}, [error]);
+
   return (
     <>
       <div className='home__cocktails'>
