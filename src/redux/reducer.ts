@@ -1,20 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TCocktail } from '../components/Cocktails';
 
 interface IState {
-  name: string
+  selectedCocktail: TCocktail;
 }
 
-const initialState = {name: 'Dmitry'} as IState;
+interface IDefaultPayload {
+  data: any;
+  ini: string;
+}
+
+const initialState = {
+  selectedCocktail: {}
+} as IState;
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    hello(state) {
-      console.log(state.name);
+    setDataDefault(state: any, action: PayloadAction<IDefaultPayload>) {
+      state[action.payload.ini] = action.payload.data;
     }
   }
 })
 
-export const {hello} = userSlice.actions;
+export const {setDataDefault} = userSlice.actions;
 export default userSlice.reducer;

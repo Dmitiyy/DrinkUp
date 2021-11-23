@@ -2,25 +2,39 @@ import { useState } from "react"
 import axios from 'axios';
 
 interface IProps {
-  url: string;
   data: any;
   type: string;
 }
 
-export const useHttp = ({url, data, type}: IProps) => {
+export const useHttp = ({data, type}: IProps) => {
   const [response, setResponse] = useState<any>();
   const [error, setError] = useState<Boolean>(false);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<Boolean>(true);
   const baseUrl: string = 'http://www.drinkup.somee.com';
-
-  const getResults = async () => {
+  
+  let isMounted = true;
+  
+  const getResults = async (url: string) => {
+    const generatedUrl = `${baseUrl}/${url}`;
     try {
       setLoading(true);
       setError(false);
-      const result = await axios.get(`${baseUrl}/${url}`);
-      setResponse(result);
+
+      if (type === 'GET') {
+        const result = await axios.get(generatedUrl);
+        if(isMounted ){
+          setResponse(result.data);
+        }
+      } else if (type === 'POST') {
+        const result = await axios.post(generatedUrl, {...data});
+        setResponse(result.data);
+      }
+      
       setLoading(false);
       setError(false);
+      return () => {
+        isMounted = false;
+      };
     } catch (err) {
       setLoading(false);
       setError(true);

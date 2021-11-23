@@ -147,10 +147,9 @@
       grid-gap: 24px
       &Item
         height: 180px
-        background: url(../../assets/images/cocktail_test.png)
         background-repeat: no-repeat
-        background-size: cover
-        background-position: top center
+        background-size: cover !important
+        background-position: center !important
         border-radius: 10px
         position: relative
         cursor: pointer
@@ -199,3 +198,27 @@
         margin-top: 18px
         p
           cursor: pointer
+
+.cocktails-loading
+  width: 100px
+  height: 100px
+
+.cocktail-btn-active
+  background: #0C2D68 !important
+  color: #fff !important
+  border: none
+
+.cocktail-btn-glass
+  svg
+    path
+      fill: #0C2D68
+  button
+    background: #0C2D68 !important
+    color: #fff !important
+    border: none
+
+.cocktails-not-found
+  width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
