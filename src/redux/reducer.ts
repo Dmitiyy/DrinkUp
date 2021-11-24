@@ -5,6 +5,7 @@ interface IState {
   isSignIn: Boolean;
   selectedCocktail: TCocktail;
   isCommunity: Boolean;
+  openRegistration: Boolean;
 }
 
 interface IDefaultPayload {
@@ -28,6 +29,7 @@ const initialState = {
     proteins: 0,
     recipe: ''
   },
+  openRegistration: false
 } as IState;
 
 const userSlice = createSlice({

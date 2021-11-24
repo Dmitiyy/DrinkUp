@@ -25,6 +25,8 @@ export const RegistrationModal = () => {
         <div className='regModal__btn'>
           <div className='regModal__btn-close'><Close onClick={() => {
             setOpen(false);
+            dispatch(setDataDefault({ini: 'openRegistration', data: false}));
+            document.body.style.overflow = '';
           }} /></div>
         </div>
         <ul className='regModal__links'>

@@ -18,18 +18,12 @@ export const useHttp = ({type}: IProps) => {
       setError(false);
 
       if (type === 'GET') {
-        console.log(data);
-        
         const result = await axios.get(generatedUrl, data);
-        // const result = await axios({
-        //   method: 'GET',
-        //   url: generatedUrl,
-        //   data
-        // });
-        console.log(result);
         
         if(isMounted ){
           setResponse(result.data);
+          console.log(result.data);
+          
         }
       } else if (type === 'POST') {
         const result = await axios.post(generatedUrl, data);
