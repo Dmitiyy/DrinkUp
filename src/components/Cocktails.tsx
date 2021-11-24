@@ -9,6 +9,7 @@ import {ReactComponent as Margarita} from '../assets/images/margarita.svg';
 import {ReactComponent as Collins} from '../assets/images/tom_collins.svg';
 import {ReactComponent as Loading} from '../assets/images/loading.svg';
 import { setDataDefault } from '../redux/reducer';
+import {useGetUser} from '../hooks/useGetUser';
 
 export type TCocktail = {
   alcoholic: Boolean,
@@ -64,7 +65,7 @@ const filterGlassBtns = [
   },
 ];
 
-export const Cocktails = ({name, link}: {name: string, link: string}) => {
+export const Cocktails = ({name, link, community}: {name: string, link: string, community: Boolean}) => {
   const dispatch = useDispatch<AppDispatch>();
   const [activeCocktailBtn, setActiveCocktailBtn] = useState<number>(0);
   const [activeGlassBtn, setActiveGlassBtn] = useState<number>(0);
@@ -74,16 +75,18 @@ export const Cocktails = ({name, link}: {name: string, link: string}) => {
   const [glassClassName, setGlassClassName] = useState<string>('home__cocktails-btnItem');
   const [toggleCocktail, setToggleCocktail] = useState<Boolean>(false);
   const [cocktailClassName, setCocktailClassName] = useState<string>('home__cocktails-btn');
-  const [response, loading, error, getResults] = useHttp({
-    data: null,
-    type: 'GET'
-  });
+  const [response, loading, error, getResults] = useHttp({type: 'GET'});
+  const startOfUrl = community ? 'community' : 'cocktails';
+  const [currentUser] = useGetUser();
+  const postUserData = community ? currentUser : {};
 
-  useEffect(() => {getResults('cocktails')}, []);
+  useEffect(() => {getResults(startOfUrl, postUserData)}, []);
 
   return (
     <>
-      <div className='home__cocktails'>
+      <div className='home__cocktails' style={{
+        minHeight: community ? '570px' : ''
+      }}>
         <div className='home__cocktails-container'>
           <h2>{name}</h2>
           <div className="home__cocktails-wrap">
@@ -107,9 +110,12 @@ export const Cocktails = ({name, link}: {name: string, link: string}) => {
                               setCocktailClassName('home__cocktails-btn');
 
                               if (selectedFilterGlass) {
-                                getResults(`cocktails/filter?glass=${filterGlassBtns[activeGlassBtn].name}`)
+                                getResults(
+                                  `${startOfUrl}/filter?glass=${filterGlassBtns[activeGlassBtn].name}`,  
+                                  postUserData
+                                )
                               } else {
-                                getResults('cocktails');
+                                getResults(startOfUrl, postUserData);
                               }
                             } else {
                               setToggleCocktail(true);
@@ -117,9 +123,9 @@ export const Cocktails = ({name, link}: {name: string, link: string}) => {
                               setCocktailClassName('home__cocktails-btn cocktail-btn-active');
 
                               if (selectedFilterGlass) {
-                                getResults(`cocktails/filter?glass=${filterGlassBtns[activeGlassBtn].name}&alcoholic=${item.value}`);
+                                getResults(`${startOfUrl}/filter?glass=${filterGlassBtns[activeGlassBtn].name}&alcoholic=${item.value}`, postUserData);
                               } else {
-                                getResults(`cocktails/filter?alcoholic=${item.value}`);
+                                getResults(`${startOfUrl}/filter?alcoholic=${item.value}`, postUserData);
                               }
                             }
                           }}>{item.name}</button>
@@ -142,11 +148,11 @@ export const Cocktails = ({name, link}: {name: string, link: string}) => {
                               setSelectedFilterGlass(false);
                               setGlassClassName('home__cocktails-btnItem');
                               if (selectedFilterCocktail) {
-                                getResults(`cocktails/filter?alcoholic=${
+                                getResults(`${startOfUrl}/filter?alcoholic=${
                                   filterCocktailBtns[activeCocktailBtn].value
-                                }`);
+                                }`, postUserData);
                               } else {
-                                getResults(`cocktails`);
+                                getResults(`${startOfUrl}`, postUserData);
                               }
                             } else {
                               setSelectedFilterGlass(true);
@@ -154,11 +160,11 @@ export const Cocktails = ({name, link}: {name: string, link: string}) => {
                               setGlassClassName('home__cocktails-btnItem cocktail-btn-glass');
               
                               if (selectedFilterCocktail) {
-                                getResults(`cocktails/filter?glass=${item.name}&alcoholic=${
+                                getResults(`${startOfUrl}/filter?glass=${item.name}&alcoholic=${
                                   filterCocktailBtns[activeCocktailBtn].value
-                                }`);
+                                }`, postUserData);
                               } else {
-                                getResults(`cocktails/filter?glass=${item.name}`);
+                                getResults(`${startOfUrl}/filter?glass=${item.name}`, postUserData);
                               }
                             }
                           }}>

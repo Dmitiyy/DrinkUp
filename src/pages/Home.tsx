@@ -8,7 +8,7 @@ export const HomePage = () => {
     <div className='home'>
       <Nav />
       <Header />
-      <Cocktails name='Cocktails' link='cocktails' />
+      <Cocktails name='Cocktails' link='cocktails' community={false} />
       <Footer />
     </div>
   ) 

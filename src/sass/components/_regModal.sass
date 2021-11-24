@@ -1,0 +1,43 @@
+.regModal
+  width: 100%
+  height: 100vh
+  background: rgba(29, 28, 28, 0.6)
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  &__wrap
+    width: 470px
+    padding: 30px
+    background: #fff
+    border-radius: 12px
+    &-form
+      width: 400px
+      margin: 0 auto
+  &__btn-close
+    width: 100%
+    display: flex
+    justify-content: flex-end
+    svg
+      cursor: pointer
+  &__links
+    display: flex
+    justify-content: center
+    list-style: none
+    li
+      color: #AFAFAF
+      font-size: 22px
+      cursor: pointer
+      font-weight: 700
+      &:nth-child(1)
+        margin-right: 80px
+
+.regModal-link-active
+  color: #0C2D68 !important
+  border-bottom: 6px solid #FCD42B
+  height: 25px

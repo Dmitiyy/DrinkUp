@@ -21,6 +21,41 @@
 body
   font-family: 'SF Pro Display'
 
+.input-error
+  border: 1px solid #d16060 !important
+
+.input-error-p
+  input
+    border: 1px solid #d16060 !important
+    border-right: none !important
+  div
+    border: 1px solid #d16060 !important
+    border-left: none !important
+
+.btn-loading
+  background: #AFAFAF !important
+
+.center-login
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 570px
+
+.log-error
+  color: #d16060
+  margin-top: 10px
+  font-size: 19px !important
+
+.auth-community-title
+  width: 1150px
+  display: block
+  margin: 0 auto
+  color: #0C2D68
+  font-size: 36px
+  font-weight: 700
+  margin-bottom: 18px
+  margin-top: 40px
+
 @import './components/home'
 @import './components/community'
 @import './components/cocktail'
@@ -29,3 +64,5 @@ body
 @import './components/like'
 @import './components/personal'
 @import './components/newCocktail'
+@import './components/unreg-modal'
+@import './components/regModal'

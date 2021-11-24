@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TCocktail } from '../components/Cocktails';
 
 interface IState {
+  isSignIn: Boolean;
   selectedCocktail: TCocktail;
+  isCommunity: Boolean;
 }
 
 interface IDefaultPayload {
@@ -11,7 +13,21 @@ interface IDefaultPayload {
 }
 
 const initialState = {
-  selectedCocktail: {}
+  isSignIn: false,
+  isCommunity: false,
+  selectedCocktail: {
+    alcoholic: false,
+    carbs: 0,
+    description: '',
+    fats: 0,
+    glassType: '',
+    id: 0,
+    img: '',
+    ingredients: [],
+    name: '',
+    proteins: 0,
+    recipe: ''
+  },
 } as IState;
 
 const userSlice = createSlice({

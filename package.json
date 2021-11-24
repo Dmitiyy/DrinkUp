@@ -12,7 +12,10 @@
     "@types/react": "^17.0.35",
     "@types/react-dom": "^17.0.11",
     "axios": "^0.24.0",
+    "bcrypt": "^5.0.1",
+    "email-validator": "^2.0.4",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.0.2",
@@ -44,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0"
   }
 }

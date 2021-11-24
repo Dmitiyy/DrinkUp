@@ -4,6 +4,9 @@ import { Nav } from "../components/Nav"
 import { ReactComponent as Bin } from "../assets/images/bin.svg";
 import { ReactComponent as Plus } from "../assets/images/plus.svg";
 import { Footer } from "../components/Footer";
+import { useGetUser } from "../hooks/useGetUser";
+import { Registration } from "../components/Registration";
+import { UnRegisterModal } from "../components/UnRegisterModal";
 
 const crumbs = [
   {title: 'Home', link: '/', id: 1},
@@ -11,37 +14,48 @@ const crumbs = [
 ] as TCrumbs;
 
 export const Personal = () => {
+  const [currentUser, isLogIn] = useGetUser();
+
   return (
     <>
       <Nav />
       <BreadCrumbs data={crumbs} active={2} />
       <div className='personal'>
           <h2>Personal Cocktails</h2>
-          <div className='personal__wrap'>
-            {
-              [0, 1, 2, 3,4 ].map(item => {
-                return (
-                  <div key={item} className='personal__wrap-item'>
-                    <div className='personal__item-wrap'>
-                      <div>
-                        <div className='personal-circle'>
-                          <Bin />
+          {
+            isLogIn ? (
+              <div className='personal__wrap'>
+                {
+                  [0, 1, 2, 3,4 ].map(item => {
+                    return (
+                      <div key={item} className='personal__wrap-item'>
+                        <div className='personal__item-wrap'>
+                          <div>
+                            <div className='personal-circle'>
+                              <Bin />
+                            </div>
+                          </div>
+                          <h3>White Lady</h3>
                         </div>
                       </div>
-                      <h3>White Lady</h3>
-                    </div>
+                    )
+                  })
+                }
+                <Link to='/user/personal/new'>
+                  <div className='personal__item-new'>
+                    <Plus />
+                    <p>Add Cocktail</p>
                   </div>
-                )
-              })
-            }
-            <Link to='/user/personal/new'>
-              <div className='personal__item-new'>
-                <Plus />
-                <p>Add Cocktail</p>
+                </Link>
               </div>
-            </Link>
+            ) : (
+              <>
+                <div className='center-login profile__wrap'></div>
+                <UnRegisterModal />
+              </>
+            )
+          }
           </div>
-        </div>
         <Footer />
     </>
   )

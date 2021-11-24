@@ -7,15 +7,22 @@ import { useAppSelector } from "../redux";
 
 export const CocktailElement = ({community}: {community: Boolean}) => {
   const name = useAppSelector(state => state.user.selectedCocktail.name);
-  const crumbs = [
+  
+  const bCrumbs = community ? [
+    {title: 'Home', link: '/', id: 1},
+    {title: 'Community', link: '/community', id: 2},
+    {title: name, link: '/cocktails/search', id: 3},
+  ] : [
     {title: 'Home', link: '/', id: 1},
     {title: name, link: '/cocktails/search', id: 2},
-  ] as TCrumbs;
+  ]
+
+  const crumbs = bCrumbs as TCrumbs;
 
   return (
     <>
       <Nav />
-      <BreadCrumbs data={crumbs} active={2} />
+      <BreadCrumbs data={crumbs} active={community ? 3 : 2} />
       <CocktailComponent community={community} />
       <Footer />
     </>
