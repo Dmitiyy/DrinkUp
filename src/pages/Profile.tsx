@@ -12,6 +12,8 @@ import { useHttp } from "../hooks/useHttp";
 import {ReactComponent as Loading} from '../assets/images/loading.svg';
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import {ReactComponent as ModalUpdated} from '../assets/images/updated.svg';
+import {ReactComponent as Close} from '../assets/images/close.svg';
 
 const crumbs = [
   {title: 'Home', link: '/', id: 1},
@@ -40,6 +42,7 @@ export const Profile = () => {
   const [putLoading, setPutLoading] = useState<Boolean>(false);
   const [putError, setPutError] = useState<Boolean>(false);
   const [successful, setSuccessful] = useState<Boolean>(true);
+  const [updated, setUpdated] = useState<Boolean>(false);
 
   const generateBioLength = (): void => {setBioLength(bio.length)};
   useEffect(() => {generateBioLength()}, [bio]);
@@ -47,6 +50,14 @@ export const Profile = () => {
     if (isLogIn) {setMethod('POST');getResults('user', currentUser)};
   }, []);
   useEffect(() => {console.log(response)}, [response]);
+  useEffect(() => {
+    if (updated) {
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [updated]);
 
   const checkIsResponseExists = (name: string, func: Function) => {
     if (response) {func(response[name])};
@@ -144,6 +155,7 @@ export const Profile = () => {
                                     setPutLoading(false);
                                     setPutError(false);
                                     setPassword('');
+                                    setUpdated(true);
                                   } catch (err) {
                                     setPutLoading(false);
                                     setPutError(true);
@@ -178,6 +190,20 @@ export const Profile = () => {
         </div>
       </div>
       <Footer />
+      {
+        updated ? (
+          <div className='profile-updated'>
+            <div className='profile-updated-modal'>
+              <div><Close onClick={() => {
+                setUpdated(false);
+                document.body.style.overflow = '';
+              }} /></div>
+              <ModalUpdated />
+              <h2>Your data was updated successfully!</h2>
+            </div>
+          </div>
+        ) : null
+      }
     </>
   )
 }
