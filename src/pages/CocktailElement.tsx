@@ -10,8 +10,8 @@ export const CocktailElement = ({community}: {community: Boolean}) => {
   
   const bCrumbs = community ? [
     {title: 'Home', link: '/', id: 1},
-    {title: 'Community', link: '/community', id: 2},
-    {title: name, link: '/cocktails/search', id: 3},
+    {title: 'Blog', link: '/community', id: 2},
+    {title: name, link: '/community/cocktail', id: 3},
   ] : [
     {title: 'Home', link: '/', id: 1},
     {title: name, link: '/cocktails/search', id: 2},

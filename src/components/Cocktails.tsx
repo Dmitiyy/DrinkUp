@@ -75,7 +75,7 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
   const [glassClassName, setGlassClassName] = useState<string>('home__cocktails-btnItem');
   const [toggleCocktail, setToggleCocktail] = useState<Boolean>(false);
   const [cocktailClassName, setCocktailClassName] = useState<string>('home__cocktails-btn');
-  const [response, loading, error, getResults] = useHttp({type: 'GET'});
+  const [response, loading, error, getResults] = useHttp({type: community ? 'POST' : 'GET'});
   const startOfUrl = community ? 'community' : 'cocktails';
   const [currentUser] = useGetUser();
   const postUserData = community ? currentUser : {};
@@ -181,7 +181,7 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
             {
               loading ? (
                 <Loading className='cocktails-loading' />
-              ) : !response ? (
+              ) : error || !response ? (
                 <h3 className='cocktails-not-found'>Error, try again later</h3>
               ) : response.length === 0 ? (
                 <h3 className='cocktails-not-found'>No cocktails found</h3>
