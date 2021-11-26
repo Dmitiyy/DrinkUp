@@ -81,6 +81,7 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
   const postUserData = community ? currentUser : {};
 
   useEffect(() => {getResults(startOfUrl, postUserData)}, []);
+  useEffect(() => {console.log(response);}, [response]);
 
   return (
     <>

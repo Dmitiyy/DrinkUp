@@ -5,7 +5,6 @@ import { ReactComponent as Bin } from "../assets/images/bin.svg";
 import { ReactComponent as Plus } from "../assets/images/plus.svg";
 import { Footer } from "../components/Footer";
 import { useGetUser } from "../hooks/useGetUser";
-import { Registration } from "../components/Registration";
 import { UnRegisterModal } from "../components/UnRegisterModal";
 
 const crumbs = [

@@ -74,7 +74,7 @@ export const CocktailComponent = ({community}: {community: Boolean}) => {
                     currentCocktail.ingredients.map((item, i) => {
                       return (
                         <div className='cocktail__ingredients-item' key={item.id + i + 'id'}>
-                          <h3>{item.product.name} - {item.amount}ml</h3>
+                          <h3>{item.product.name} - {item.amount}gr</h3>
                           <div className='cocktail__ingredients-descr'>
                             <p>Fat: <span>{item.product.fats}g</span></p>
                             <p>Carbohydrate: <span>{item.product.carbs}g</span></p>
