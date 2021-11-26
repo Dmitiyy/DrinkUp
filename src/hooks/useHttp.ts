@@ -26,7 +26,7 @@ export const useHttp = ({type}: IProps) => {
       } else if (type === 'POST') {
         const result = await axios.post(generatedUrl, data);
         setResponse(result.data);
-      }
+      } 
       
       setLoading(false);
       setError(false);

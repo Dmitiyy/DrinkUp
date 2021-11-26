@@ -1,7 +1,25 @@
+import { useEffect, useState } from 'react';
+import { useGetUser } from '../hooks/useGetUser';
+import { useHttp } from '../hooks/useHttp';
 import { useAppSelector } from '../redux';
+import { TCocktail } from './Cocktails';
 
 export const CocktailComponent = ({community}: {community: Boolean}) => {
   const currentCocktail = useAppSelector(state => state.user.selectedCocktail);
+  const [currentUser] = useGetUser();
+  const [delLoading, setDelLoading] = useState<Boolean>(false);
+  const [response, loading, error, getResults] = useHttp({type: 'POST'});
+  const [btnToggle, setBtnToggle] = useState<Boolean>(false);
+
+  useEffect(() => {getResults('user', currentUser)}, []);
+  useEffect(() => {
+    if (response) {
+      const isFoundCocktail = response.likedCocktails.some((item: TCocktail) => {
+        return item.id === currentCocktail.id;
+      });
+      setBtnToggle(isFoundCocktail);
+    }
+  }, [response]);
 
   return (
     <div className="cocktail">
@@ -16,7 +34,33 @@ export const CocktailComponent = ({community}: {community: Boolean}) => {
                 <img src={`${currentCocktail.img}`} alt="cocktail" />
                 {
                   community ? (
-                    <button className='cocktail-btn'>Add to favourites</button>
+                    <button className='cocktail-btn' 
+                    style={{background: loading || delLoading ? '#AFAFAF' : '#0C2D68'}} 
+                    onClick={async () => {
+                      if (!btnToggle) {
+                        try {
+                          setDelLoading(true);
+                          await fetch('https://www.drinkup.somee.com/user/liked/add', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({...currentUser, cocktail: {...currentCocktail}})
+                          });
+                          setDelLoading(false);
+                          setBtnToggle(true);
+                        } catch (err) {setDelLoading(false)}
+                      } else {
+                        try {
+                          setDelLoading(true);
+                          await fetch('https://www.drinkup.somee.com/user/liked', {
+                            method: 'DELETE',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({...currentUser, cocktail: {...currentCocktail}})
+                          })
+                          setDelLoading(false);
+                          setBtnToggle(false);
+                        } catch (err) {setDelLoading(false)}
+                      }
+                    }}>{loading || delLoading ? 'Loading' : btnToggle ? 'Added to favourites' : 'Add to favourites'}</button>
                   ) : null
                 }
               </div>
