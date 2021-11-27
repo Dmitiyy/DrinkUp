@@ -229,7 +229,7 @@ export const NewCocktail = () => {
                 recipe: algo,
                 description: bio,
                 glassType: 'Cocktail glass',
-                img: 'https://www.pxfuel.com/en/free-photo-expqp',
+                img: 'https://www.thecocktaildb.com/images/media/drink/0clus51606772388.jpg',
                 ingredients: [...ingData]
               }
             };

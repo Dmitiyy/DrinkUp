@@ -1,4 +1,4 @@
-import {Link, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { BreadCrumbs, TCrumbs } from "../components/BreadCrumbs";
 import { Nav } from "../components/Nav"
 import { ReactComponent as Like } from "../assets/images/like.svg";
