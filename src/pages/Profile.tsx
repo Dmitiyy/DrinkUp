@@ -33,7 +33,7 @@ export const Profile = () => {
   const [passwordType, setPasswordType] = useState<Boolean>(false);
   const [passwordCType, setPasswordCType] = useState<Boolean>(false);
   const [passwordC, setPasswordC] = useState<string>('');
-  const [cookies, remove] = useCookies(['user']);
+  const [cookies, setC, removeCookie] = useCookies(['user']);
 
   const [bioError, setBioError] = useState<Boolean>(false);
   const [emailError, setEmailError] = useState<Boolean>(false);
@@ -47,14 +47,19 @@ export const Profile = () => {
   const generateBioLength = (): void => {setBioLength(bio.length)};
   useEffect(() => {generateBioLength()}, [bio]);
   useEffect(() => {
-    if (isLogIn) {setMethod('POST');getResults('user', currentUser)};
+    if (isLogIn) {
+      const fetch = async () => {
+        setMethod('POST');
+        await getResults('user', currentUser)
+      }
+      fetch();
+    };
   }, []);
-  useEffect(() => {console.log(response)}, [response]);
   useEffect(() => {
     if (updated) {
       document.body.style.overflow = 'hidden';
       window.scrollTo(0, 0);
-    } else {
+    } else if (!updated && isLogIn) {
       document.body.style.overflow = '';
     }
   }, [updated]);
@@ -73,7 +78,7 @@ export const Profile = () => {
   
   return (
     <>
-      <Nav />
+      <Nav community={false} />
       <BreadCrumbs data={crumbs} active={2} />
       <div className='profile'>
         <h2>Profile</h2>
@@ -171,7 +176,7 @@ export const Profile = () => {
                         successful ? (
                           <div className='profile-logoutWrap'>
                             <div className='profile-logout' onClick={() => {
-                              remove('user', '');
+                              removeCookie('user');
                             }}>
                               <Logout />
                               <h3>Log out</h3>

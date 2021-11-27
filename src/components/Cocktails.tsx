@@ -80,8 +80,12 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
   const [currentUser] = useGetUser();
   const postUserData = community ? currentUser : {};
 
-  useEffect(() => {getResults(startOfUrl, postUserData)}, []);
-  useEffect(() => {console.log(response);}, [response]);
+  useEffect(() => {
+    const fetch = async () => {
+      await getResults(startOfUrl, postUserData)
+    }
+    fetch();
+  }, []);
 
   return (
     <>
@@ -103,7 +107,7 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
                           <button className={activeCocktailBtn === i && selectedFilterCocktail
                           ? cocktailClassName : 'home__cocktails-btn'} 
                           key={item.id}
-                          onClick={() => {
+                          onClick={async () => {
                             setActiveCocktailBtn(i);
                             if (activeCocktailBtn === i && toggleCocktail) {
                               setToggleCocktail(false);
@@ -111,12 +115,12 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
                               setCocktailClassName('home__cocktails-btn');
 
                               if (selectedFilterGlass) {
-                                getResults(
+                                await getResults(
                                   `${startOfUrl}/filter?glass=${filterGlassBtns[activeGlassBtn].name}`,  
                                   postUserData
                                 )
                               } else {
-                                getResults(startOfUrl, postUserData);
+                                await getResults(startOfUrl, postUserData);
                               }
                             } else {
                               setToggleCocktail(true);
@@ -124,9 +128,9 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
                               setCocktailClassName('home__cocktails-btn cocktail-btn-active');
 
                               if (selectedFilterGlass) {
-                                getResults(`${startOfUrl}/filter?glass=${filterGlassBtns[activeGlassBtn].name}&alcoholic=${item.value}`, postUserData);
+                                await getResults(`${startOfUrl}/filter?glass=${filterGlassBtns[activeGlassBtn].name}&alcoholic=${item.value}`, postUserData);
                               } else {
-                                getResults(`${startOfUrl}/filter?alcoholic=${item.value}`, postUserData);
+                                await getResults(`${startOfUrl}/filter?alcoholic=${item.value}`, postUserData);
                               }
                             }
                           }}>{item.name}</button>
@@ -142,18 +146,18 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
                       filterGlassBtns.map((item, i) => {
                         return (
                           <div className={activeGlassBtn === i && selectedFilterGlass ? glassClassName : 'home__cocktails-btnItem'} 
-                          key={item.id} onClick={() => {
+                          key={item.id} onClick={async () => {
                             setActiveGlassBtn(i);
                             if (activeGlassBtn === i && toggleGlass) {
                               setToggleGlass(false);
                               setSelectedFilterGlass(false);
                               setGlassClassName('home__cocktails-btnItem');
                               if (selectedFilterCocktail) {
-                                getResults(`${startOfUrl}/filter?alcoholic=${
+                                await getResults(`${startOfUrl}/filter?alcoholic=${
                                   filterCocktailBtns[activeCocktailBtn].value
                                 }`, postUserData);
                               } else {
-                                getResults(`${startOfUrl}`, postUserData);
+                                await getResults(`${startOfUrl}`, postUserData);
                               }
                             } else {
                               setSelectedFilterGlass(true);
@@ -161,11 +165,11 @@ export const Cocktails = ({name, link, community}: {name: string, link: string, 
                               setGlassClassName('home__cocktails-btnItem cocktail-btn-glass');
               
                               if (selectedFilterCocktail) {
-                                getResults(`${startOfUrl}/filter?glass=${item.name}&alcoholic=${
+                                await getResults(`${startOfUrl}/filter?glass=${item.name}&alcoholic=${
                                   filterCocktailBtns[activeCocktailBtn].value
                                 }`, postUserData);
                               } else {
-                                getResults(`${startOfUrl}/filter?glass=${item.name}`, postUserData);
+                                await getResults(`${startOfUrl}/filter?glass=${item.name}`, postUserData);
                               }
                             }
                           }}>

@@ -44,7 +44,7 @@ export const SignIn = () => {
           <Password onClick={() => {setPasswordType(!passwordType)}} />
         </div>
       </div>
-      <button className={loading ? 'btn-loading' : ''} onClick={() => {
+      <button className={loading ? 'btn-loading' : ''} onClick={async () => {
         const formData = {
           login: emailValue,
           password: passwordValue
@@ -56,7 +56,7 @@ export const SignIn = () => {
         else {setPasswordError(false)};
 
         if (validate(formData.login) && formData.password.length > 8) {
-          getResults('identity/signin', formData);
+          await getResults('identity/signin', formData);
         }
       }}>{loading ? 'LOADING' : 'LOG IN'}</button>
       {error ? (<p className='log-error'>Error, try again</p>) : null}

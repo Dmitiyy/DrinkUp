@@ -11,7 +11,12 @@ export const CocktailComponent = ({community}: {community: Boolean}) => {
   const [response, loading, error, getResults] = useHttp({type: 'POST'});
   const [btnToggle, setBtnToggle] = useState<Boolean>(false);
 
-  useEffect(() => {getResults('user', currentUser)}, []);
+  useEffect(() => {
+    const fetch = async () => {
+      await getResults('user', currentUser)
+    }
+    fetch();
+  }, []);
   useEffect(() => {
     if (response) {
       const isFoundCocktail = response.likedCocktails.some((item: TCocktail) => {

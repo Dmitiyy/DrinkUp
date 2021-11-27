@@ -49,7 +49,7 @@ export const SignUp = () => {
           <Password onClick={() => {setPasswordType(!passwordType)}} />
         </div>
       </div>
-      <button className={loading ? 'btn-loading' : ''} onClick={() => {
+      <button className={loading ? 'btn-loading' : ''} onClick={async () => {
         const formData = {
           login: emailValue,
           password: passwordValue
@@ -61,7 +61,7 @@ export const SignUp = () => {
         else {setPasswordError(false)};
 
         if (!emailError && !passwordError && policy) {
-          getResults('identity/signup', formData);
+          await getResults('identity/signup', formData);
         }
       }}>{loading ? 'LOADING' : 'SIGN UP'}</button>
       {error ? (<p className='log-error'>Error, try again</p>) : null}

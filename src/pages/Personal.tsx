@@ -28,7 +28,12 @@ export const Personal = () => {
   const [open, setOpen] = useState<Boolean>(false);
   const cocktail = useAppSelector(state => state.user.selectedCocktail);
 
-  useEffect(() => {getResults('user/personal', currentUser)}, []);
+  useEffect(() => {
+    const fetch = async () => {
+      await getResults('user/personal', currentUser)
+    }
+    fetch();
+  }, []);
   useEffect(() => {
     if (response) {setData(response)};
   }, [response]);
@@ -36,14 +41,14 @@ export const Personal = () => {
     if (open) {
       document.body.style.overflow = 'hidden';
       window.scrollTo(0, 0);
-    } else {
+    } else if (!open && isLogIn) {
       document.body.style.overflow = '';
     }
   }, [open]);
 
   return (
     <>
-      <Nav />
+      <Nav community={false} />
       <BreadCrumbs data={crumbs} active={2} />
       <div className='personal'>
           <h2>Personal Cocktails</h2>

@@ -21,7 +21,7 @@ export const CocktailElement = ({community}: {community: Boolean}) => {
 
   return (
     <>
-      <Nav />
+      <Nav community={false} />
       <BreadCrumbs data={crumbs} active={community ? 3 : 2} />
       <CocktailComponent community={community} />
       <Footer />

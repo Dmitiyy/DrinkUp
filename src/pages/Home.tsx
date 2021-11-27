@@ -6,7 +6,7 @@ import { Nav } from "../components/Nav"
 export const HomePage = () => {
   return (
     <div className='home'>
-      <Nav />
+      <Nav community={false} />
       <Header />
       <Cocktails name='Cocktails' link='cocktails' community={false} />
       <Footer />

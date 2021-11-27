@@ -25,14 +25,19 @@ export const Liked = () => {
   const [delLoading, setDelLoading] = useState<Boolean>(false);
   const [data, setData] = useState([]);
 
-  useEffect(() => {getResults('user/liked', currentUser)}, []);
+  useEffect(() => {
+    const fetch = async () => {
+      await getResults('user/liked', currentUser)
+    }
+    fetch();
+  }, []);
   useEffect(() => {
     if (response) {setData(response)};
   }, [response]);
 
   return (
     <>
-      <Nav />
+      <Nav community={false} />
       <BreadCrumbs data={crumbs} active={2} />
       <div className='liked'>
         <h2>Favourite Cocktails</h2>

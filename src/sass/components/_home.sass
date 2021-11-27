@@ -31,6 +31,8 @@
       height: 35px
     &-search
       display: flex
+      position: relative
+      z-index: 2
       input
         height: 40px
         width: calc(400px - 36px)
@@ -55,6 +57,8 @@
         border: 1px solid #D7D7D7
         border-left: none
         img
+          width: 22px
+        svg
           width: 22px
     &-icons
       display: flex
@@ -223,3 +227,94 @@
   display: flex
   justify-content: center
   align-items: center
+
+.nav__modal
+  width: 400px !important
+  height: 100% !important
+  background: #fff
+  border-radius: 0px 0px 4px 4px !important
+  position: absolute
+  cursor: default !important
+  top: 40px
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 2
+  h3
+    font-size: 18px !important
+    font-weight: 400 !important
+    margin-top: 15px
+    margin-left: 17px
+
+.nav__search-modal
+  width: 100%
+  height: 100vh
+  background: rgba(29, 28, 28, 0.6)
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 1
+
+.serach-active
+  border-radius: 4px 0px 0px 0px !important
+
+.serach-active-p
+  border-radius: 0px 4px 0px 0px !important
+
+.nav__modal-item
+  border: none !important
+  width: auto !important
+  height: auto !important
+  justify-content: flex-start !important
+  background: transparent !important
+  img
+    width: 70px !important
+    border-radius: 8px
+
+.nav__modal-wrap
+  width: 100% !important
+  height: auto !important
+  border: none !important
+  border-radius: 0 0 4px 4px !important
+  display: block !important
+  a
+    text-decoration: none !important
+  // padding: 20px
+    padding-bottom: 1px
+    cursor: default !important
+  .nav__modal-item
+    display: flex
+    // margin-bottom: 20px
+    margin-left: 20px
+    margin-top: 20px
+    div
+      width: 100%
+      height: auto
+      border: none
+      flex-direction: column
+      align-items: flex-start
+      margin-left: 12px
+      h3
+        color: #333333 !important
+        font-weight: 700 !important
+        font-size: 18px !important
+        margin-bottom: 5px
+        margin-left: 0px !important
+        margin-top: 0px !important
+      p
+        color: #333333 !important
+        font-weight: 400 !important
+        font-size: 18px !important
+
+.nav__modal-a
+  width: 400px !important
+  height: auto !important
+  border: none !important
+  border-radius: 0 0 4px 4px !important
+  display: block !important
+  cursor: default !important
+  padding-bottom: 20px
+  max-height: 300px !important
+  overflow-y: auto

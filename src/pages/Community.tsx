@@ -17,7 +17,7 @@ export const Community = () => {
   return (
     <>
       <div className='community'>
-        <Nav />
+        <Nav community={true} />
         <BreadCrumbs data={crumbs} active={2} />
         {
           !isLogIn ? (

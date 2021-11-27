@@ -51,8 +51,6 @@ export const NewCocktail = () => {
   const generateBioLength = (func: Function, value: string): void => {func(value.length)};
   useEffect(() => {generateBioLength(setBioLength, bio)}, [bio]);
   useEffect(() => {generateBioLength(setAlgoLength, algo)}, [algo]);
-  useEffect(() => {console.log(response);
-  }, [response])
   useEffect(() => {
     if (
       nameC.length <= 30 && nameC.length !== 0 && 
@@ -75,7 +73,7 @@ export const NewCocktail = () => {
 
   return (
     <>
-      <Nav />
+      <Nav community={false} />
       <BreadCrumbs data={crumbs} active={3} />
       <div className='newCocktail'>
         <h2>New Cocktail</h2>
