@@ -84,7 +84,6 @@ export const Nav = ({community}: {community: Boolean}) => {
                               <img src={item.img} alt='cocktail' />
                               <div>
                                 <h3>{item.name}</h3>
-                                <p>300kCal</p>
                               </div>
                             </div>
                           </Link>
