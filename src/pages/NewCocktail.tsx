@@ -41,6 +41,7 @@ export const NewCocktail = () => {
   const [nameC, setNameC] = useState<string>('');
   const [response, loading, error, getResults] = useHttp({type: 'POST'});
   const [mainBtn, setMainBtn] = useState<Boolean>(false);
+  const [disLoad, setDisLoad] = useState<Boolean>(false);
 
   const [nameCError, setNameCError] = useState<Boolean>(false);
   const [bioError, setBioError] = useState<Boolean>(false);
@@ -219,6 +220,7 @@ export const NewCocktail = () => {
             bioLength <= 250 && bioLength !== 0 && 
             algoLength <= 250 && algoLength !== 0 && 
             ingData.length !== 0) {
+            setDisLoad(true);
             const data = {
               ...currentUser,
               cocktail: {
@@ -236,8 +238,9 @@ export const NewCocktail = () => {
             setBio('');
             setAlgo('');
             setIngData([]);
+            setDisLoad(false);
           }
-        }}>{loading ? 'loading' : 'Add new Cocktail'}</button></div>
+        }}>{disLoad ? 'loading' : 'Add new Cocktail'}</button></div>
         {error ? (<h3 className='new-not-found'>Error, try again later</h3>) : null}
       </div>
       <Footer />

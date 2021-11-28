@@ -14,6 +14,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import {ReactComponent as ModalUpdated} from '../assets/images/updated.svg';
 import {ReactComponent as Close} from '../assets/images/close.svg';
+import { ReactComponent as Eclose } from "../assets/images/eclose.svg";
 
 const crumbs = [
   {title: 'Home', link: '/', id: 1},
@@ -118,7 +119,13 @@ export const Profile = () => {
                           value={password} 
                           onChange={(e) => setPassword(e.target.value)} />
                           <div>
-                            <Password onClick={() => {setPasswordType(!passwordType)}} />
+                            {
+                               passwordType ? (
+                                <Eclose className='eclose' onClick={() => {setPasswordType(!passwordType)}} />
+                              ) : (
+                                <Password className='eclose' onClick={() => {setPasswordType(!passwordType)}} />
+                              )
+                            }
                           </div>
                         </div>
                         {
@@ -129,7 +136,15 @@ export const Profile = () => {
                                 <input type={passwordCType ? 'text' : 'password'} id='passwordC'
                                 onChange={(e) => setPasswordC(e.target.value)} />
                                 <div>
-                                  <Password onClick={() => {setPasswordCType(!passwordCType)}} />
+                                  {
+                                    
+                                    passwordCType ? (
+                                      <Eclose className='eclose' onClick={() => {setPasswordCType(!passwordCType)}} />
+                                    ) : (
+                                      <Password className='eclose' onClick={() => {setPasswordCType(!passwordCType)}} />
+                                    )
+                                   
+                                  }
                                 </div>
                               </div>
                               <button className={'profile-save'} style={{background: putLoading ? '#AFAFAF' : '#0C2D68'}}

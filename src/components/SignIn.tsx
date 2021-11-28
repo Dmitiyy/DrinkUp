@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { validate } from 'email-validator';
 import { useCookies } from 'react-cookie';
 import { ReactComponent as Password } from "../assets/images/password.svg";
+import { ReactComponent as Eclose } from "../assets/images/eclose.svg";
 import { useHttp } from "../hooks/useHttp";
 
 export const SignIn = () => {
@@ -14,6 +15,8 @@ export const SignIn = () => {
   const [response, loading, error, getResults] = useHttp({type: 'POST'});
   const [cookies, setCookie] = useCookies(['user']);
   const navigate = useNavigate();
+  const [disLoad, setDisLoad] = useState<Boolean>(false);
+  const [fDis, setFDis] = useState<Boolean>(true);
 
   useEffect(() => {
     if (response) {
@@ -24,6 +27,12 @@ export const SignIn = () => {
       document.body.style.overflow = '';
     }
   }, [response]);
+
+  useEffect(() => {
+    if (emailValue.length !== 0 && passwordValue.length !== 0) {
+      setFDis(false);
+    } else {setFDis(true)};
+  }, [emailValue, passwordValue]);
 
   return (
     <div className='signUp'>
@@ -41,10 +50,16 @@ export const SignIn = () => {
           setPasswordValue(e.target.value);
         }} />
         <div>
-          <Password onClick={() => {setPasswordType(!passwordType)}} />
+          {
+            passwordType ? (
+              <Eclose className='eclose' onClick={() => {setPasswordType(!passwordType)}} />
+            ) : (
+              <Password className='eclose' onClick={() => {setPasswordType(!passwordType)}} />
+            )
+          }
         </div>
       </div>
-      <button className={loading ? 'btn-loading' : ''} onClick={async () => {
+      <button className={disLoad || fDis ? 'btn-loading' : ''} onClick={async () => {
         const formData = {
           login: emailValue,
           password: passwordValue
@@ -55,10 +70,12 @@ export const SignIn = () => {
         if (formData.password.length < 8) {setPasswordError(true)}
         else {setPasswordError(false)};
 
-        if (validate(formData.login) && formData.password.length > 8) {
+        if (validate(formData.login) && formData.password.length >= 8) {
+          setDisLoad(true);
           await getResults('identity/signin', formData);
+          setDisLoad(false);
         }
-      }}>{loading ? 'LOADING' : 'LOG IN'}</button>
+      }}>{disLoad ? 'LOADING' : 'LOG IN'}</button>
       {error ? (<p className='log-error'>Error, try again</p>) : null}
     </div>
   )

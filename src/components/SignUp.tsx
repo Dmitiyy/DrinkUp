@@ -7,6 +7,7 @@ import { ReactComponent as Password } from "../assets/images/password.svg";
 import { AppDispatch } from "../redux";
 import { setDataDefault } from "../redux/reducer";
 import { useHttp } from "../hooks/useHttp";
+import { ReactComponent as Eclose } from "../assets/images/eclose.svg";
 
 export const SignUp = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +20,8 @@ export const SignUp = () => {
   const [response, loading, error, getResults] = useHttp({type: 'POST'});
   const [cookies, setCookie] = useCookies(['user']);
   const navigate = useNavigate();
+  const [disLoad, setDisLoad] = useState<Boolean>(false);
+  const [fDis, setFDis] = useState<Boolean>(true);
 
   useEffect(() => {
     if (response) {
@@ -30,6 +33,12 @@ export const SignUp = () => {
     }
   }, [response]);
 
+  useEffect(() => {
+    if (emailValue.length !== 0 && passwordValue.length !== 0 && policy) {
+      setFDis(false);
+    } else {setFDis(true)};
+  }, [emailValue, passwordValue, policy]);
+
   return (
     <div className='signUp'>
       <label htmlFor="email">E-mail</label>
@@ -38,6 +47,7 @@ export const SignUp = () => {
       onChange={(e) => {
         setEmailValue(e.target.value);
       }} />
+      {emailError ? (<p className='reg-error'>Please, enter a valid email</p>) : null}
       <label htmlFor="password">Password</label>
       <div className={passwordError ? 'input-error-p' : ''}>
         <input type={passwordType ? 'text' : 'password'} 
@@ -46,10 +56,17 @@ export const SignUp = () => {
           setPasswordValue(e.target.value);
         }} />
         <div>
-          <Password onClick={() => {setPasswordType(!passwordType)}} />
+          {
+            passwordType ? (
+              <Eclose className='eclose' onClick={() => {setPasswordType(!passwordType)}} />
+            ) : (
+              <Password className='eclose' onClick={() => {setPasswordType(!passwordType)}} />
+            )
+          }
         </div>
       </div>
-      <button className={loading ? 'btn-loading' : ''} onClick={async () => {
+      {passwordError ? (<p className='reg-error'>Password must contain more than 8 symbols, and at least one capital letter, special character</p>) : null}
+      <button className={disLoad || fDis ? 'btn-loading' : ''} onClick={async () => {
         const formData = {
           login: emailValue,
           password: passwordValue
@@ -57,14 +74,22 @@ export const SignUp = () => {
 
         if (!validate(formData.login)) {setEmailError(true)} 
         else {setEmailError(false)};
-        if (formData.password.length < 8) {setPasswordError(true)}
+        const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+        if (formData.password.length < 8 || !format.test(formData.password) ||
+        !/[A-Z]/.test(formData.password) || !/[a-z]/.test(formData.password)
+        || !/\d/.test(formData.password)) {setPasswordError(true)}
         else {setPasswordError(false)};
 
-        if (!emailError && !passwordError && policy) {
+        if (validate(formData.login) && formData.password.length >= 8 && /[A-Z]/.test(formData.password) 
+        && format.test(formData.password) && /[a-z]/.test(formData.password) && /\d/.test(formData.password)
+        && policy && !fDis) {
+          setDisLoad(true);
           await getResults('identity/signup', formData);
+          setDisLoad(false);
         }
-      }}>{loading ? 'LOADING' : 'SIGN UP'}</button>
-      {error ? (<p className='log-error'>Error, try again</p>) : null}
+      }}>{disLoad ? 'LOADING' : 'SIGN UP'}</button>
+      {error ? (<p className='log-error'>User with current email is already registered</p>) : null}
       <div className='signUp__policy'>
         <div className='checkbox' onClick={() => setPolicy(!policy)}>
           {policy ? (<p>✔</p>) : null}
