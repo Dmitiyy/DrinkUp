@@ -15,6 +15,7 @@ import { useCookies } from "react-cookie";
 import {ReactComponent as ModalUpdated} from '../assets/images/updated.svg';
 import {ReactComponent as Close} from '../assets/images/close.svg';
 import { ReactComponent as Eclose } from "../assets/images/eclose.svg";
+import { useNavigate } from "react-router";
 
 const crumbs = [
   {title: 'Home', link: '/', id: 1},
@@ -35,7 +36,11 @@ export const Profile = () => {
   const [passwordCType, setPasswordCType] = useState<Boolean>(false);
   const [passwordC, setPasswordC] = useState<string>('');
   const [cookies, setC, removeCookie] = useCookies(['user']);
+  const navigate = useNavigate();
 
+  const [disSave, setDisSave] = useState<Boolean>(false);
+  const [edited, setEdited] = useState<Boolean>(false);
+  const [nameError, setNameError] = useState<Boolean>(false);
   const [bioError, setBioError] = useState<Boolean>(false);
   const [emailError, setEmailError] = useState<Boolean>(false);
   const [passwordError, setPasswordError] = useState<Boolean>(false);
@@ -64,6 +69,15 @@ export const Profile = () => {
       document.body.style.overflow = '';
     }
   }, [updated]);
+  useEffect(() => {
+    if (
+      ((name.length !== 0 && name.length <= 30) ||
+      bio.length <= 250 || validate(email) || (password.length !== 0 && passwordC.length !== 0))
+      && edited
+    ) {
+      setDisSave(true);
+    } else {setDisSave(false)};
+  }, [name, bio, email, password, passwordC, edited]);
 
   const checkIsResponseExists = (name: string, func: Function) => {
     if (response) {func(response[name])};
@@ -101,22 +115,30 @@ export const Profile = () => {
                           onChange={(e) => setName(e.target.value)}
                           className={editNick ? 'profile__nick-active' : ''}
                           readOnly={editNick ? true : false} />
-                          <Edit onClick={() => setEditNick(!editNick)} />
+                          <Edit onClick={() => {
+                            setEditNick(!editNick)
+                            setEdited(true);
+                          }} />
                         </div>
+                        {nameError ? (<p className='reg-error'>Your name must be no more than 30 characters</p>) : null}
                         <label htmlFor="bio">Bio</label>
                         <textarea id="bio" placeholder='Brief description'
                         value={bio} className={bioError ? 'input-error' : ''}
+                        readOnly={editNick ? true : false}
                         onChange={(e) => setBio(e.target.value)} />
                         <div className='profile__bio'>
                           <p>{bioLength}/250</p>
                         </div>
                         <label htmlFor="email">Your email</label>
                         <input type="email" id='email' value={email} 
-                        onChange={(e) => setEmail(e.target.value)} className={emailError ? 'input-error' : ''} />
+                        onChange={(e) => setEmail(e.target.value)} 
+                        readOnly={editNick ? true : false}
+                        className={emailError ? 'input-error' : ''} />
+                        {emailError ? (<p className='reg-error'>Please, enter a valid email</p>) : null}
                         <label htmlFor="password">Password</label>
                         <div className={passwordCError ? 'input-error-p' : ''}>
                           <input type={passwordType ? 'text' : 'password'} id='password' 
-                          value={password} 
+                          value={password} readOnly={editNick ? true : false}
                           onChange={(e) => setPassword(e.target.value)} />
                           <div>
                             {
@@ -134,7 +156,8 @@ export const Profile = () => {
                               <label htmlFor="passwordC">Confirm Password</label>
                               <div className={passwordCError ? 'input-error-p' : ''}>
                                 <input type={passwordCType ? 'text' : 'password'} id='passwordC'
-                                onChange={(e) => setPasswordC(e.target.value)} />
+                                onChange={(e) => setPasswordC(e.target.value)}
+                                readOnly={editNick ? true : false} />
                                 <div>
                                   {
                                     
@@ -147,18 +170,28 @@ export const Profile = () => {
                                   }
                                 </div>
                               </div>
+                            </>
+                          ) : null
+                        }
+                        {
+                          disSave ? (
+                            <>
                               <button className={'profile-save'} style={{background: putLoading ? '#AFAFAF' : '#0C2D68'}}
-                               onClick={async (event) => {
+                              onClick={async (event) => {
                                 event.preventDefault();
-
+      
                                 if (!validate(email)) {setEmailError(true)}
                                 else {setEmailError(false)};
-
+      
                                 if (password !== passwordC) {setPasswordError(true);setPasswordCError(true)}
                                 else {setPasswordError(false);setPasswordCError(false)}
-
+      
                                 if (bio.length > 250) {setBioError(true)}
                                 else {setBioError(false)};
+
+                                if (name.length > 30 || name.length === 0) {
+                                  setNameError(true);
+                                } else {setNameError(false)};
                                 
                                 if (validate(email) && password === passwordC && name.length <= 30 
                                 && name.length !== 0 && bio.length <= 250) {
@@ -182,7 +215,7 @@ export const Profile = () => {
                                   }
                                 }
                               }}>{putLoading ? 'Loading' : 'Save changes'}</button>
-                              {putError ? (<p className='log-error'>Error, try again</p>) : null}
+                              {/* {putError ? (<p className='log-error'>Error, try again</p>) : null} */}
                             </>
                           ) : null
                         }
@@ -192,6 +225,7 @@ export const Profile = () => {
                           <div className='profile-logoutWrap'>
                             <div className='profile-logout' onClick={() => {
                               removeCookie('user');
+                              navigate('/');
                             }}>
                               <Logout />
                               <h3>Log out</h3>

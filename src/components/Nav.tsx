@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Logo from '../assets/images/logo.png';
 import Search from '../assets/images/search.svg';
 import Heart from '../assets/images/heart.svg';
@@ -19,6 +19,7 @@ export const Nav = ({community}: {community: Boolean}) => {
   const [currentUser, isLogIn] = useGetUser();
   const [filteredData, setFilteredData] = useState<Array<TCocktail>>([]);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (open) {
@@ -43,7 +44,9 @@ export const Nav = ({community}: {community: Boolean}) => {
     <>
       <div className='home__nav'>
         <div className='home__nav-wrap'>
-          <img src={Logo} alt="logo" className='home__nav-logo' />
+          <img src={Logo} alt="logo" className='home__nav-logo' onClick={() => {
+            navigate('/');
+          }}  />
           <div className='home__nav-search'>
             <input type="text" placeholder='Search' className={open ? 'serach-active' : ''}
             onFocus={() => {setOpen(true)}} onChange={(event) => {

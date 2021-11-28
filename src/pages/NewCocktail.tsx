@@ -82,17 +82,25 @@ export const NewCocktail = () => {
           <form>
             <label htmlFor="cocktail_name">Cocktail name</label>
             <input type="text" id='cocktail_name' value={nameC} 
-            className={nameCError ? 'input-error' : ''} placeholder='Cocktail Name' name='name'
+            placeholder='Cocktail Name' name='name'
+            className={nameCError ? 'input-error' : ''}
             onChange={(e) => setNameC(e.target.value)} />
+            {nameCError ? (<p className='reg-error-p'>Name of cocktail must be no more than 30 characters</p>) : null}
             <label htmlFor="descr">Brief description</label>
             <textarea id="descr" className={bioError ? 'input-error' : ''} placeholder='Brief description' 
             onChange={(e: any) => setBio(e.target.value)} name='descr' value={bio} />
             <div className='newCocktail__descr-num'><p>{bioLength}/250</p></div>
+            {bioError ? (<p className='reg-error-p'>
+              Description must not contain more than 250 characters
+            </p>) : null}
             <label htmlFor="algo">Cooking algorithm</label>
             <textarea id="algo" placeholder='Cooking algorithm' value={algo} name='algorithm'
             className={algoError ? 'input-error' : ''}
             onChange={(e: any) => setAlgo(e.target.value)} />
             <div className='newCocktail__descr-num'><p>{algoLength}/250</p></div>
+            {algoError ? (<p className='reg-error-p'>
+              Description must not contain more than 250 characters
+            </p>) : null}
           </form>
           <div className='newCocktail__wrap-second'>
             <h3>Name and list of ingredients with Macros*</h3>
