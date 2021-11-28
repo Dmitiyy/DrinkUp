@@ -14,6 +14,7 @@ export const Footer = () => {
           <p>Already have an account?</p>
           <p onClick={() => {
             dispatch(setDataDefault({ini: 'openRegistration', data: true}))
+            dispatch(setDataDefault({ini: 'isSignIn', data: true}))
           }}>Sign in</p>
         </div>
         <div className='home__footer-wrap'>
