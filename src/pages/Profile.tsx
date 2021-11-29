@@ -182,7 +182,7 @@ export const Profile = () => {
                                 if (!validate(email)) {setEmailError(true)}
                                 else {setEmailError(false)};
       
-                                if (password !== currentUser.password) {setPasswordError(true);setPasswordCError(true)}
+                                if (password.length === 0) {setPasswordError(true);setPasswordCError(true)}
                                 else {setPasswordError(false);setPasswordCError(false)}
       
                                 if (bio.length > 250) {setBioError(true)}
@@ -192,7 +192,7 @@ export const Profile = () => {
                                   setNameError(true);
                                 } else {setNameError(false)};
                                 
-                                if (validate(email) && password === currentUser.password && name.length <= 30 
+                                if (validate(email) && password.length !== 0  && name.length <= 30 
                                 && name.length !== 0 && bio.length <= 250) {
                                   const formData = {
                                     login: currentUser.login,
@@ -209,6 +209,7 @@ export const Profile = () => {
                                     setPassword('');
                                     setUpdated(true);
                                     setEdited(false);
+                                    setEditNick(false);
                                   } catch (err) {
                                     setPutLoading(false);
                                     setPutError(true);
