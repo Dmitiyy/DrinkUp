@@ -209,7 +209,7 @@ export const Profile = () => {
                                     setPassword('');
                                     setUpdated(true);
                                     setEdited(false);
-                                    setEditNick(false);
+                                    setEditNick(true);
                                   } catch (err) {
                                     setPutLoading(false);
                                     setPutError(true);
