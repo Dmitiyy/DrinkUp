@@ -11,20 +11,16 @@ export const useHttp = ({ type }: IProps) => {
   const [loading, setLoading] = useState<Boolean>(true);
   const baseUrl: string = 'https://www.drinkup.somee.com';
 
-  let isMounted = true;
-
   const getResults = async (url: string, data: any) => {
     const generatedUrl = `${baseUrl}/${url}`;
+
     try {
       setLoading(true);
       setError(false);
 
       if (type === 'GET') {
         const result = await axios.get(generatedUrl, data);
-
-        if (isMounted) {
-          setResponse(result.data);
-        }
+        setResponse(result.data); 
       } else if (type === 'POST') {
         const result = await axios.post(generatedUrl, data);
         setResponse(result.data);
@@ -32,9 +28,6 @@ export const useHttp = ({ type }: IProps) => {
 
       setLoading(false);
       setError(false);
-      return () => {
-        isMounted = false;
-      };
     } catch (err) {
       setLoading(false);
       setError(true);
