@@ -62,10 +62,20 @@ export const NewCocktail = () => {
       setMainBtn(true);
     } else {setMainBtn(false)};
   }, [bioLength, nameC, algoLength, ingData]);
-  
+  useEffect(() => {
+    if (nameC.length > 30) {
+      setNameCError(true);
+    } else {setNameCError(false)};
+
+    if (bioLength > 250) {setBioError(true)}
+    else {setBioError(false)};
+
+    if (algoLength > 250) {setAlgoError(true)}
+    else {setAlgoError(false)};
+  }, [nameC, bioLength, algoLength]);
 
   const FormikSchema = Yup.object().shape({
-    name: Yup.string().required(),
+    name: Yup.string().max(30).required(),
     amount: Yup.string().required(),
     fat: Yup.string().required(),
     protein: Yup.string().required(),
@@ -85,12 +95,12 @@ export const NewCocktail = () => {
             placeholder='Cocktail Name' name='name'
             className={nameCError ? 'input-error' : ''}
             onChange={(e) => setNameC(e.target.value)} />
-            {nameCError ? (<p className='reg-error-p'>Name of cocktail must be no more than 30 characters</p>) : null}
+            {nameCError ? (<p className='reg-error-n'>Name of cocktail must be no more than 30 characters</p>) : null}
             <label htmlFor="descr">Brief description</label>
             <textarea id="descr" className={bioError ? 'input-error' : ''} placeholder='Brief description' 
             onChange={(e: any) => setBio(e.target.value)} name='descr' value={bio} />
             <div className='newCocktail__descr-num'><p>{bioLength}/250</p></div>
-            {bioError ? (<p className='reg-error-p'>
+            {bioError ? (<p className='reg-error-n'>
               Description must not contain more than 250 characters
             </p>) : null}
             <label htmlFor="algo">Cooking algorithm</label>
@@ -98,8 +108,8 @@ export const NewCocktail = () => {
             className={algoError ? 'input-error' : ''}
             onChange={(e: any) => setAlgo(e.target.value)} />
             <div className='newCocktail__descr-num'><p>{algoLength}/250</p></div>
-            {algoError ? (<p className='reg-error-p'>
-              Description must not contain more than 250 characters
+            {algoError ? (<p className='reg-error-n'>
+              Algorithm must not contain more than 250 characters
             </p>) : null}
           </form>
           <div className='newCocktail__wrap-second'>
@@ -131,6 +141,9 @@ export const NewCocktail = () => {
                       <Field type="text" placeholder='Ingredient Name' id='ingre_name' 
                       name='name' autoComplete="off" 
                       className={errors.name && touched.name ? 'input-error' : ''} />
+                      {errors.name && touched.name ? (
+                        <p className='reg-error-n'>Name of ingredient must be no more than 30 characters</p>
+                      ) : null}
                       <label htmlFor="amount">Amout of ingredient</label>
                       <div>
                         <Field type="text" id='amount' name='amount' 
@@ -214,19 +227,19 @@ export const NewCocktail = () => {
             setNameCError(true);
           } else {setNameCError(false)};
 
-          if (bioLength > 250 || bioLength === 0) {setBioError(true)}
+          if (bioLength > 250) {setBioError(true)}
           else {setBioError(false)};
 
-          if (algoLength > 250 || algoLength === 0) {setAlgoError(true)}
+          if (algoLength > 250) {setAlgoError(true)}
           else {setAlgoError(false)};
 
           if (ingData.length === 0) {setSecondFormError(true)}
           else {setSecondFormError(false)};
 
           if (
-            nameC.length <= 30 && nameC.length !== 0 && 
-            bioLength <= 250 && bioLength !== 0 && 
-            algoLength <= 250 && algoLength !== 0 && 
+            nameC.length <= 30 && 
+            bioLength <= 250 && 
+            algoLength <= 250 && 
             ingData.length !== 0) {
             setDisLoad(true);
             const data = {

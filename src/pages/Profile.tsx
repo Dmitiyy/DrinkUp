@@ -78,6 +78,24 @@ export const Profile = () => {
       setDisSave(true);
     } else {setDisSave(false)};
   }, [name, bio, email, password, passwordC, edited]);
+  useEffect(() => {
+    if ((name.length === 0  || name.length > 30) && edited) {setNameError(true)}
+    else {setNameError(false)};
+
+    if (password.length === 0 && edited) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+
+    if ((bio.length > 250) && edited) {setBioError(true)}
+    else {setBioError(false)}
+
+    if (!validate(email) && edited) {setEmailError(true)}
+    else {
+      setEmailError(false);
+    }
+  }, [name, bio, password, edited]);
 
   const checkIsResponseExists = (name: string, func: Function) => {
     if (response) {func(response[name])};
@@ -129,6 +147,9 @@ export const Profile = () => {
                         <div className='profile__bio'>
                           <p>{bioLength}/250</p>
                         </div>
+                        {bioError ? (<p className='reg-error'>
+                          Bio must not contain more than 250 characters
+                        </p>) : null}
                         <label htmlFor="email">Your email</label>
                         <input type="email" id='email' value={email} 
                         onChange={(e) => setEmail(e.target.value)} 
@@ -136,7 +157,7 @@ export const Profile = () => {
                         className={emailError ? 'input-error' : ''} />
                         {emailError ? (<p className='reg-error'>Please, enter a valid email</p>) : null}
                         <label htmlFor="password">Password</label>
-                        <div className={passwordCError ? 'input-error-p' : ''}>
+                        <div className={passwordError ? 'input-error-p' : ''}>
                           <input type={passwordType ? 'text' : 'password'} id='password' 
                           value={password} readOnly={editNick ? true : false}
                           onChange={(e) => setPassword(e.target.value)} />
@@ -150,29 +171,7 @@ export const Profile = () => {
                             }
                           </div>
                         </div>
-                        {
-                          password && password.length >= 8 ? (
-                            <>
-                              <label htmlFor="passwordC">Confirm Password</label>
-                              <div className={passwordCError ? 'input-error-p' : ''}>
-                                <input type={passwordCType ? 'text' : 'password'} id='passwordC'
-                                onChange={(e) => setPasswordC(e.target.value)}
-                                readOnly={editNick ? true : false} />
-                                <div>
-                                  {
-                                    
-                                    passwordCType ? (
-                                      <Eclose className='eclose' onClick={() => {setPasswordCType(!passwordCType)}} />
-                                    ) : (
-                                      <Password className='eclose' onClick={() => {setPasswordCType(!passwordCType)}} />
-                                    )
-                                   
-                                  }
-                                </div>
-                              </div>
-                            </>
-                          ) : null
-                        }
+                        {passwordError ? (<p className='reg-error'>Please, enter your password</p>) : null}
                         {
                           disSave ? (
                             <>
@@ -183,7 +182,7 @@ export const Profile = () => {
                                 if (!validate(email)) {setEmailError(true)}
                                 else {setEmailError(false)};
       
-                                if (password !== passwordC) {setPasswordError(true);setPasswordCError(true)}
+                                if (password !== currentUser.password) {setPasswordError(true);setPasswordCError(true)}
                                 else {setPasswordError(false);setPasswordCError(false)}
       
                                 if (bio.length > 250) {setBioError(true)}
@@ -193,7 +192,7 @@ export const Profile = () => {
                                   setNameError(true);
                                 } else {setNameError(false)};
                                 
-                                if (validate(email) && password === passwordC && name.length <= 30 
+                                if (validate(email) && password === currentUser.password && name.length <= 30 
                                 && name.length !== 0 && bio.length <= 250) {
                                   const formData = {
                                     login: currentUser.login,
@@ -209,13 +208,14 @@ export const Profile = () => {
                                     setPutError(false);
                                     setPassword('');
                                     setUpdated(true);
+                                    setEdited(false);
                                   } catch (err) {
                                     setPutLoading(false);
                                     setPutError(true);
                                   }
                                 }
                               }}>{putLoading ? 'Loading' : 'Save changes'}</button>
-                              {/* {putError ? (<p className='log-error'>Error, try again</p>) : null} */}
+                              {putError ? (<p className='log-error'>Error, password mismatch</p>) : null}
                             </>
                           ) : null
                         }
